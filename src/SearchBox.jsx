@@ -3,8 +3,9 @@ import Button from '@mui/material/Button';
 import './SearchBox.css';
 import { useState } from 'react';
 
-export default function SearchBox({updateInfo}) {
+export default function SearchBox({ updateInfo }) {
     const [city, setCity] = useState('');
+    const [error, setError] = useState(''); 
 
     const API_URL = "https://api.openweathermap.org/data/2.5/weather";
     const API_KEY = import.meta.env.VITE_API_KEY;
@@ -16,6 +17,12 @@ export default function SearchBox({updateInfo}) {
                 throw new Error(`Error: ${res.status} ${res.statusText}`);
             }
             const jsonRes = await res.json();
+
+            
+            if (jsonRes.cod === '404') {
+                throw new Error(' City not found. Please check the city name.');
+            }
+
             let result = {
                 city: city,
                 temp: jsonRes.main.temp,
@@ -24,32 +31,36 @@ export default function SearchBox({updateInfo}) {
                 humidity: jsonRes.main.humidity,
                 feelsLike: jsonRes.main.feels_like,
                 weather: jsonRes.weather[0].description
-            }     
-            return result ;     
+            };
+
+            return result;
         } catch (error) {
-            console.error("Failed to fetch weather info:", error);
+            setError(error.message);  
+            return null;  
         }
     };
 
     const handleChange = (event) => {
         setCity(event.target.value);
+        setError('');  
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!city.trim()) {
-            console.warn("City name is empty!");
+            setError("City name cannot be empty.");
             return;
         }
-        console.log("Fetching weather for city:", city);
         setCity('');
-        let newInfo = await  getWeatherInfo();
-        updateInfo(newInfo);
+        setError(''); 
+        let newInfo = await getWeatherInfo();
+        if (newInfo) {
+            updateInfo(newInfo);  
+        }
     };
 
     return (
         <div className='SearchBox'>
-
             <form onSubmit={handleSubmit}>
                 <TextField
                     id="city"
@@ -60,10 +71,12 @@ export default function SearchBox({updateInfo}) {
                     onChange={handleChange}
                 />
                 
-                <Button variant="contained" type='submit' size="large" className='btn'style={{margin: "5px 0 0 10px"}} >
+                <Button variant="contained" type='submit' size="large" id='btn' >
                     Search
                 </Button>
             </form>
+
+            {error && <div className="error-message" style={{ color: 'red', marginTop: '10px' }}>{error}</div>}  
         </div>
     );
 }

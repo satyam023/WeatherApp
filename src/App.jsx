@@ -1,5 +1,7 @@
-// import './App.css';
+import './App.css';
 import './SearchBox.css';
+import "./InfoBox.css";
+import "./WeatherApp.css"
 import WeatherApp from './WeatherApp';
 
 function App() {

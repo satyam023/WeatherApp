@@ -1,3 +1,15 @@
+body{
+    overflow: hidden;
+}
 h2{
     text-decoration: underline;
+}
+
+.weatherApp{
+    border: 1px solid #222831;
+    border-bottom: 5px solid #222831;
+    border-top: 5px solid #222831;
+    border-radius: 5px;
+    width: 346px;
+    font-weight: 700;
 }

@@ -1,5 +1,19 @@
+body{
+    background-color: #E7CCCC;
+    height: 100%;
+}
 .InfoBox{
     display: flex;
     justify-content: center;
-    height: 80%;
+    background-color: #FFF0DC;
+}
+p{
+    font-size: 16px;
+    color: black;
+    font-weight: 500;
+}
+#temp{
+    font-size: 22px;
+    font-weight: bolder;
+    color: black;
 }
