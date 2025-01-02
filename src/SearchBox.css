@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    
+}
+
+.SearchBox {
+    margin-bottom: 15px; 
+    text-align: center;
+    color: aquamarine;
+}
+
+.btn{
+    background-color: #2cd232;
+    margin: 7px 0 0 15px;
+}
